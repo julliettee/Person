@@ -28,7 +28,7 @@ Person::Person(std::string gender, std::string name, Person* mother, Person* fat
     }
     id_ = GlobalID++;
     gender_ = gender;
-   // status_ = "alive";
+    //status_ = "alive";
     name_ = name;
     mother_ = mother;
     father_ = father;
