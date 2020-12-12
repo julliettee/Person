@@ -11,7 +11,7 @@ public:
     void out();
 private:
     long id_ = 0;
-    //std::string status_;
+    std::string status_;
     std::string name_;
     std::string gender_;
     Person* mother_;
