@@ -4,7 +4,6 @@ static long GlobalID = 0;
 long capacity = 2;
 std::set <std::string> Genders = {"male", "female"};
 std::map<Person*, Person*> AllDeath;
-std::vector<Person*> AllID;
 
 // region help-functions
 void Person::out(){
@@ -123,6 +122,8 @@ Person::Person(std::string gender, std::string name, Person* mother, Person* fat
     mother_ = mother;
     father_ = father;
     clone_ = true;
+    (mother -> children_).push_back(this);
+    (father -> children_).push_back(this);
 }
 // endregion
 // region Operator
@@ -148,7 +149,6 @@ Person Person::GiveBirth(std::string gender, std::string name, Person *father) {
     if ((*this).status_ == "Dead" || (*father).status_ == "Dead"){
         throw std::exception("Dead person can't give birth.");
     }
-    AllID.push_back(this);
     return Person(gender, name, this, father, false);
 }
 void Person::Death(Person* killer) {
@@ -175,6 +175,17 @@ void Person::GetParents() {
     }
     else{
         std::cout << (*father_).name_ << " is father" << std::endl;
+    }
+}
+void Person::GetChildren() {
+    if ((this -> children_).empty()){
+        std::cout << "There are no children of this person" << std::endl;
+    }
+    else{
+        std::cout << "Children of " << (this -> name_) << ":" << std::endl;
+        for(auto child: children_){
+            std::cout << *child;
+        }
     }
 }
 // endregion
