@@ -19,7 +19,7 @@ public:
     void GetChildren();
     void GetChildren(Person*);
     Person& operator =(Person const& other);
-    Person GiveBirth(Genders, std::string, Person*);
+    Person GiveBirth(Genders, std::string, Person* = nullptr);
     friend std::ostream& operator <<(std::ostream&, const Person&);
     static Person GetEva();
     static Person GetAdam();
@@ -27,9 +27,7 @@ public:
     void out();
 private:
     Person();
-    bool clone_ = true;
     std::string name_;
-//    std::string gender_;
     Genders gender_;
     std::string status_;
     Person* mother_ = nullptr;
@@ -38,7 +36,7 @@ private:
     static Person HolySpirit;
     static Person CreateEva(Person &Eva);
     static Person CreateAdam(Person &Adam);
-    Person(Genders, std::string&, Person* = nullptr, Person* = nullptr, bool clone = true);
+    Person(Genders, std::string&, Person* = nullptr, Person* = nullptr);
 
 };
 #endif //PERSON_PERSON_H

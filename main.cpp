@@ -5,7 +5,7 @@ int main() {
         Person Eva = Person::GetEva();
         Person Adam = Person::GetAdam();
         //Person Eva2 = Person(Eva);
-        Person Kain = Eva.GiveBirth(Genders::male, "Kain", &Adam);
+        Person Kain = Eva.GiveBirth(Genders::male, "Kain");
         Person Kain2 = Person(Kain);
         Person Avel = Eva.GiveBirth(Genders::male, "Avel", &Adam);
         std::cout << Kain.GetName() << std::endl;

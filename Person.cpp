@@ -1,7 +1,7 @@
 #include "Person.h"
 
 typedef std::pair<Person *, Person *> Couple;
-long capacity = 0;
+long AntiCloneProtection = 0;
 std::map<Person *, Person *> AllDeath;
 std::map<Couple, std::vector<Person *>> ChildrenOfCouple;
 
@@ -40,14 +40,12 @@ Person Person::CreateEva(Person& Eva) {
     Eva.gender_ = Genders::female;
     Eva.name_ = "Eva";
     Eva.status_ = "Alive";
-    Eva.clone_ = true;
     return Eva;
 }
 Person Person::CreateAdam(Person& Adam) {
     Adam.gender_ = Genders::male;
     Adam.name_ = "Adam";
     Adam.status_ = "Alive";
-    Adam.clone_ = true;
     return Adam;
 }
 Person Person::GetEva() {
@@ -55,7 +53,7 @@ Person Person::GetEva() {
         throw std::exception("Person Eva already created.");
     }
     EvaGetting = true;
-    capacity++;
+    AntiCloneProtection++;
     return CreateEva(HolySpirit);
 }
 Person Person::GetAdam() {
@@ -63,7 +61,7 @@ Person Person::GetAdam() {
         throw std::exception("Person Adam already created.");
     }
     AdamGetting = true;
-    capacity++;
+    AntiCloneProtection++;
     return CreateAdam(HolySpirit);
 }
 // endregion
@@ -80,22 +78,20 @@ Person::Person(const Person& other) {
     if (this == &other) {
         throw std::exception("You can't do it");
     }
-    if (clone_) {
-        if (capacity > 0) {
-            capacity--;
-        } else {
-            throw std::exception("Stop making clone army");
-        }
+    if (AntiCloneProtection > 0) {
+        AntiCloneProtection--;
+    } else {
+        throw std::exception("Stop making clone army");
     }
+    std::cerr << "&";
     name_ = other.name_;
     gender_ = other.gender_;
     status_ = other.status_;
     mother_ = other.mother_;
     father_ = other.father_;
-    clone_ = true;
 }
 
-Person::Person(Genders gender, std::string& name, Person *mother, Person *father, bool clone) {
+Person::Person(Genders gender, std::string& name, Person *mother, Person *father) {
     if (name.empty()) {
         throw std::exception("Name can't be empty.");
     }
@@ -109,19 +105,17 @@ Person::Person(Genders gender, std::string& name, Person *mother, Person *father
             throw std::exception("The gender of father should be 'male'.");
         }
     }
-    if (clone) {
-        throw std::exception("You can't make army of clones.");
-    }
     name_ = name;
     gender_ = gender;
     status_ = "Alive";
     mother_ = mother;
     father_ = father;
-    clone_ = true;
     (mother->children_).push_back(this);
-    (father->children_).push_back(this);
-    ChildrenOfCouple[std::make_pair(mother, father)].push_back(this);
-    ChildrenOfCouple[std::make_pair(father, mother)].push_back(this);
+    if (father != nullptr) {
+        (father->children_).push_back(this);
+        ChildrenOfCouple[std::make_pair(mother, father)].push_back(this);
+        ChildrenOfCouple[std::make_pair(father, mother)].push_back(this);
+    }
 }
 // endregion
 // region Operator
@@ -129,15 +123,11 @@ Person& Person::operator = (Person const& other) {
     if (this == &other) {
         throw std::exception("You can't do it.");
     }
-    if (other.clone_) {
-        throw std::exception("You can't make army of clones.");
-    }
     name_ = other.name_;
     gender_ = other.gender_;
     status_ = other.status_;
     mother_ = other.mother_;
     father_ = other.father_;
-    clone_ = true;
     return (*this);
 }
 
@@ -163,10 +153,10 @@ std::ostream& operator<<(std::ostream& out, const Person& other) {
 // endregion
 // region Actions
 Person Person::GiveBirth(Genders gender, std::string name, Person *father) {
-    if (status_ == "Dead" || (*father).status_ == "Dead") {
+    if (status_ == "Dead" || (father != nullptr && father -> status_ == "Dead")) {
         throw std::exception("Dead person can't give birth.");
     }
-    return Person(gender, name, this, father, false);
+    return Person(gender, name, this, father);
 }
 
 void Person::Death(Person *killer) {
