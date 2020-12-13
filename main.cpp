@@ -1,10 +1,12 @@
 #include "Person.h"
 
 int main() {
-    try{
+    try {
         Person Eva = Person::GetEva();
         Person Adam = Person::GetAdam();
+        //Person Eva2 = Person(Eva);
         Person Kain = Eva.GiveBirth(Genders::male, "Kain", &Adam);
+        Person Kain2 = Person(Kain);
         Person Avel = Eva.GiveBirth(Genders::male, "Avel", &Adam);
         std::cout << Kain.GetName() << std::endl;
         std::cout << Kain.GetGender() << std::endl;

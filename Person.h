@@ -10,7 +10,6 @@ enum class Genders {male,female};
 
 class Person{
 public:
-    Person();
     Person(const Person&);
     std::string GetGender() const;
     std::string GetStatus() const;
@@ -27,6 +26,7 @@ public:
     virtual ~Person();
     void out();
 private:
+    Person();
     bool clone_ = true;
     std::string name_;
 //    std::string gender_;
@@ -35,8 +35,7 @@ private:
     Person* mother_ = nullptr;
     Person* father_ = nullptr;
     std::vector <Person*> children_;
-    static Person Adam;
-    static Person Eva;
+    static Person HolySpirit;
     static Person CreateEva(Person &Eva);
     static Person CreateAdam(Person &Adam);
     Person(Genders, std::string&, Person* = nullptr, Person* = nullptr, bool clone = true);
