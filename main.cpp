@@ -2,13 +2,9 @@
 
 int main() {
     try{
-        Person Adam = Person::GetAdam();
         Person Eva = Person::GetEva();
-        Person Kain = Eva.GiveBirth("male", "Kain", &Adam);
-        Person Avel = Eva.GiveBirth("male", "Avel", &Adam);
-        Kain.out();
-        Avel.out();
-
+        Person Adam = Person::GetAdam();
+        Eva = Eva;
     }
     catch (std::exception& exception) {
         std::cout << exception.what() << std::endl;

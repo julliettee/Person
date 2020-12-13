@@ -10,6 +10,8 @@ public:
     void SetAdam(std::string, std::string);
     Person& operator =(Person const& other);
     Person GiveBirth(std::string, std::string, Person*);
+    Person();
+    Person(const Person&);
     static Person GetEva();
     static Person GetAdam();
     virtual ~Person();

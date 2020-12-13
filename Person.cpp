@@ -17,6 +17,7 @@ bool EvaCreation = false;
 bool AdamCreation = false;
 bool EvaGetting = false;
 bool AdamGetting = false;
+bool HaveGod = false;
 void Person::SetEva(std::string gender, std::string name) {
     if (EvaCreation){
         throw std::exception("Person Eva already created.");
@@ -47,10 +48,9 @@ Person CreateAdam(Person &Adam){
     AdamCreation = true;
     return Adam;
 }
-static Person CreateHolySpirit(Person &HolySpirit){
-    return HolySpirit;
-}
-Person HolySpirit = CreateHolySpirit(HolySpirit);
+
+Person HolySpirit;
+
 static Person Adam = CreateAdam(HolySpirit);
 static Person Eva = CreateEva(HolySpirit);
 
@@ -70,6 +70,26 @@ Person Person::GetAdam() {
 }
 // endregion
 // region Constructor
+Person::Person(){
+    if (HaveGod){
+        throw std::exception("You can't create God.");
+    }
+    id_ = -1;
+    gender_ = "None";
+    HaveGod = true;
+}
+Person::Person(const Person& other){
+    if (this == &other){
+        throw std::exception("You can't do it");
+    }
+    id_ = other.id_;
+    name_ = other.name_;
+    gender_ = other.gender_;
+    status_ = other.status_;
+    mother_ = other.mother_;
+    father_ = other.father_;
+    clone_ = true;
+}
 Person::Person(std::string gender, std::string name, Person* mother, Person* father, bool clone){
     if (Genders.find(gender) == Genders.end()){
         throw std::exception("Wrong value of gender.");
@@ -103,6 +123,9 @@ Person::Person(std::string gender, std::string name, Person* mother, Person* fat
 // endregion
 // region Operator
 Person& Person::operator = (Person const& other) {
+    if (this == &other){
+        throw std::exception("You can't do it.");
+    }
     if (other.clone_){
         throw std::exception("You can't make army of clones.");
     }
