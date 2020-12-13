@@ -3,6 +3,16 @@
 static long GlobalID = 0;
 std::set <std::string> Genders = {"male", "female"};
 
+
+// region help-functions
+void Person::out(){
+    std::cout << "Id: " << id_ << std::endl;
+    std::cout << "Gender: " << gender_ << std::endl;
+    std::cout << "Name: " << name_ << std::endl;
+    std::cout << "Status: " << status_ << std::endl;
+}
+// endregion
+
 // region Constructor
 Person::Person(std::string gender, std::string name, Person* mother, Person* father){
     if (Genders.find(gender) == Genders.end()){
