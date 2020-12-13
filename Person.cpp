@@ -1,6 +1,7 @@
 #include "Person.h"
 
 static long GlobalID = 0;
+long capacity = 2;
 std::set <std::string> Genders = {"male", "female"};
 std::map<Person*, Person*> AllDeath;
 
@@ -15,8 +16,7 @@ void Person::out(){
             std::cout << "Unknown reason of death" <<std::endl;
         }
         else{
-            Person killer = *AllDeath[this];
-            std::cout << "Killed by " << killer.name_ << std::endl;
+            std::cout << "Killed by " << (*AllDeath[this]).name_ << std::endl;
         }
     }
 }
@@ -63,11 +63,13 @@ Person HolySpirit;
 static Person Adam = CreateAdam(HolySpirit);
 static Person Eva = CreateEva(HolySpirit);
 
+
 Person Person::GetEva() {
     if (EvaGetting){
         throw std::exception("Person Eva already created.");
     }
     EvaGetting = true;
+    capacity++;
     return Eva;
 }
 Person Person::GetAdam() {
@@ -75,6 +77,7 @@ Person Person::GetAdam() {
         throw std::exception("Person Adam already created.");
     }
     AdamGetting = true;
+    capacity++;
     return Adam;
 }
 // endregion
@@ -90,6 +93,14 @@ Person::Person(){
 Person::Person(const Person& other){
     if (this == &other){
         throw std::exception("You can't do it");
+    }
+    if (clone_){
+        if (capacity){
+            capacity--;
+        }
+        else{
+            throw std::exception("Stop making clone army");
+        }
     }
     id_ = other.id_;
     name_ = other.name_;
@@ -107,14 +118,12 @@ Person::Person(std::string gender, std::string name, Person* mother, Person* fat
         throw std::exception("Name can't be empty.");
     }
     if (mother != nullptr){
-        Person person = *mother;
-        if (person.gender_ == "male"){
+        if ((*mother).gender_ == "male"){
             throw std::exception("The gender of mother should be 'female'.");
         }
     }
     if (father != nullptr){
-        Person person = *father;
-        if (person.gender_ == "female"){
+        if ((*father).gender_ == "female"){
             throw std::exception("The gender of father should be 'male'.");
         }
     }
@@ -150,21 +159,17 @@ Person& Person::operator = (Person const& other) {
 // endregion
 // region Actions
 Person Person::GiveBirth(std::string gender, std::string name, Person *father) {
-    Person mam = *this;
-    Person dad = *father;
-    if (mam.status_ == "Dead" || dad.status_ == "Dead"){
+    if ((*this).status_ == "Dead" || (*father).status_ == "Dead"){
         throw std::exception("Dead person can't give birth.");
     }
     return Person(gender, name, this, father, false);
 }
 void Person::Death(Person* killer) {
-    Person person = *this;
-    if (person.status_ == "Dead"){
+    if ((*this).status_ == "Dead"){
         throw std::exception("This person already dead.");
     }
     if (killer != nullptr){
-        Person murder = *killer;
-        if (murder.status_ == "Dead"){
+        if ((*killer).status_ == "Dead"){
             throw std::exception("Killer already dead.");
         }
     }
@@ -176,15 +181,13 @@ void Person::GetParents() {
         std::cout << "Unknown mother" << std::endl;
     }
     else{
-        Person mother = *mother_;
-        std::cout << mother.name_ << " is mother" << std::endl;
+        std::cout << (*mother_).name_ << " is mother" << std::endl;
     }
     if (father_ == nullptr){
         std::cout << "Unknown father" << std::endl;
     }
     else{
-        Person father = *father_;
-        std::cout << father.name_ << " is father" << std::endl;
+        std::cout << (*father_).name_ << " is father" << std::endl;
     }
 }
 // endregion

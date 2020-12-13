@@ -5,13 +5,13 @@ int main() {
         Person Eva = Person::GetEva();
         Person Adam = Person::GetAdam();
         Person Kain = Eva.GiveBirth("male", "Kain", &Adam);
-        Person Avel = Eva.GiveBirth("male", "Avel", &Adam);
+        Person Avel = Person(Eva);
         Kain.Death(&Avel);
         Kain.GetParents();
         Kain.out();
     }
     catch (std::exception& exception) {
-        std::cout << exception.what() << std::endl;
+        std::cerr << exception.what() << std::endl;
         exit(-1);
     }
 
