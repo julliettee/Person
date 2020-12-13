@@ -70,7 +70,7 @@ Person Person::GetAdam() {
 }
 // endregion
 // region Constructor
-Person::Person(std::string gender, std::string name, Person* mother, Person* father){
+Person::Person(std::string gender, std::string name, Person* mother, Person* father, bool clone){
     if (Genders.find(gender) == Genders.end()){
         throw std::exception("Wrong value of gender.");
     }
@@ -89,12 +89,25 @@ Person::Person(std::string gender, std::string name, Person* mother, Person* fat
             throw std::exception("The gender of father should be 'male'.");
         }
     }
+    if (clone){
+        throw std::exception("You can't make army of clones.");
+    }
     id_ = GlobalID++;
     name_ = name;
     gender_ = gender;
     status_ = "Alive";
     mother_ = mother;
     father_ = father;
+    clone_ = 1;
+}
+// endregion
+// region Operator
+Person Person::operator = (Person& other) {
+    if (other.clone_){
+        throw std::exception("You can't make army of clones.");
+    }
+    (*this) = other;
+    return (*this);
 }
 // endregion
 // region destructor
