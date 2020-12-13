@@ -5,7 +5,7 @@ int main() {
         Person Eva = Person::GetEva();
         Person Adam = Person::GetAdam();
         Person Kain = Eva.GiveBirth("male", "Kain", &Adam);
-        Person Avel = Person(Eva);
+        Person Avel = Eva.GiveBirth("male", "Avel", &Adam);
         Kain.Death(&Avel);
         Kain.GetParents();
         Kain.out();
@@ -14,7 +14,6 @@ int main() {
         std::cerr << exception.what() << std::endl;
         exit(-1);
     }
-
     return 0;
 }
 

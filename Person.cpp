@@ -4,6 +4,7 @@ static long GlobalID = 0;
 long capacity = 2;
 std::set <std::string> Genders = {"male", "female"};
 std::map<Person*, Person*> AllDeath;
+std::vector<Person*> AllID;
 
 // region help-functions
 void Person::out(){
@@ -22,46 +23,31 @@ void Person::out(){
 }
 // endregion
 // region FirstPeople
-bool EvaCreation = false;
-bool AdamCreation = false;
 bool EvaGetting = false;
 bool AdamGetting = false;
 bool HaveGod = false;
-void Person::SetEva(std::string gender, std::string name) {
-    if (EvaCreation){
-        throw std::exception("Person Eva already created.");
-    }
-    id_ = GlobalID++;
-    gender_ = gender;
-    name_ = name;
-    status_ = "Alive";
-    clone_ = true;
-}
-Person CreateEva(Person &Eva){
-    Eva.SetEva("female", "Eva");
-    EvaCreation = true;
+
+Person Person::CreateEva(Person &Eva) {
+    Eva.id_ = GlobalID++;
+    Eva.gender_ = "female";
+    Eva.name_ = "Eva";
+    Eva.status_ = "Alive";
+    Eva.clone_ = true;
     return Eva;
 }
-void Person::SetAdam(std::string gender, std::string name) {
-    if (AdamCreation){
-        throw std::exception("Person Adam already created.");
-    }
-    id_ = GlobalID++;
-    gender_ = gender;
-    name_ = name;
-    status_ = "Alive";
-    clone_ = true;
-}
-Person CreateAdam(Person &Adam){
-    Adam.SetAdam("male", "Adam");
-    AdamCreation = true;
+
+Person Person::CreateAdam(Person &Adam) {
+    Adam.id_ = GlobalID++;
+    Adam.gender_ = "male";
+    Adam.name_ = "Adam";
+    Adam.status_ = "Alive";
+    Adam.clone_ = true;
     return Adam;
 }
 
 Person HolySpirit;
-
-static Person Adam = CreateAdam(HolySpirit);
-static Person Eva = CreateEva(HolySpirit);
+Person Person::Adam = CreateAdam(HolySpirit);
+Person Person::Eva = CreateEva(HolySpirit);
 
 
 Person Person::GetEva() {
@@ -162,6 +148,7 @@ Person Person::GiveBirth(std::string gender, std::string name, Person *father) {
     if ((*this).status_ == "Dead" || (*father).status_ == "Dead"){
         throw std::exception("Dead person can't give birth.");
     }
+    AllID.push_back(this);
     return Person(gender, name, this, father, false);
 }
 void Person::Death(Person* killer) {
