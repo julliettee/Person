@@ -4,6 +4,7 @@ static long GlobalID = 0;
 long capacity = 2;
 std::set <std::string> Genders = {"male", "female"};
 std::map<Person*, Person*> AllDeath;
+std::map <std::pair<Person*, Person*>,  std::vector<Person*>> ChildrenOfCouple;
 
 // region help-functions
 void Person::out(){
@@ -124,6 +125,8 @@ Person::Person(std::string gender, std::string name, Person* mother, Person* fat
     clone_ = true;
     (mother -> children_).push_back(this);
     (father -> children_).push_back(this);
+    ChildrenOfCouple[std::make_pair(mother, father)].push_back(this);
+    ChildrenOfCouple[std::make_pair(father, mother)].push_back(this);
 }
 // endregion
 // region Operator
@@ -205,6 +208,17 @@ void Person::GetChildren() {
     else{
         std::cout << "Children of " << (this -> name_) << ":" << std::endl;
         for(auto child: children_){
+            std::cout << *child;
+        }
+    }
+}
+void Person::GetChildren(Person* parent) {
+    if (ChildrenOfCouple.find(std::make_pair(this, parent)) == ChildrenOfCouple.end()){
+        std::cout << "There are no children of this couple" << std::endl;
+    }
+    else{
+        std::cout << "Children of " << (this -> name_) <<  " and " << (parent->name_) << ":" << std::endl;
+        for(auto child: ChildrenOfCouple[std::make_pair(this, parent)]){
             std::cout << *child;
         }
     }

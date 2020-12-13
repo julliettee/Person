@@ -8,6 +8,7 @@ int main() {
         Person Avel = Eva.GiveBirth("male", "Avel", &Adam);
         Kain.Death(&Avel);
         Kain.GetParents();
+        Eva.GetChildren(&Adam);
         std::cout << Kain;
     }
     catch (std::exception& exception) {
