@@ -7,6 +7,7 @@
 #include <map>
 
 enum class Genders {male,female};
+enum class Status {alive, dead};
 
 class Person{
 public:
@@ -21,15 +22,15 @@ public:
     Person& operator =(Person const& other);
     Person GiveBirth(Genders, std::string, Person* = nullptr);
     friend std::ostream& operator <<(std::ostream&, const Person&);
-    static Person GetEva();
-    static Person GetAdam();
+    [[nodiscard]] static Person GetEva();
+    [[nodiscard]] static Person GetAdam();
     virtual ~Person();
     void out();
 private:
     Person();
     std::string name_;
     Genders gender_;
-    std::string status_;
+    Status status_;
     Person* mother_ = nullptr;
     Person* father_ = nullptr;
     std::vector <Person*> children_;

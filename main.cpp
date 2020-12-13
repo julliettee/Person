@@ -2,11 +2,11 @@
 
 int main() {
     try {
+        //Person::GetEva();
         Person Eva = Person::GetEva();
         Person Adam = Person::GetAdam();
-        //Person Eva2 = Person(Eva);
-        Person Kain = Eva.GiveBirth(Genders::male, "Kain");
-        Person Kain2 = Person(Kain);
+        //Adam = Eva;
+        Person Kain = Eva.GiveBirth(Genders::male, "Kain", &Adam);
         Person Avel = Eva.GiveBirth(Genders::male, "Avel", &Adam);
         std::cout << Kain.GetName() << std::endl;
         std::cout << Kain.GetGender() << std::endl;
@@ -14,7 +14,7 @@ int main() {
         Kain.Death(&Avel);
         Kain.GetParents();
         Eva.GetChildren(&Adam);
-        std::cout << Kain;
+        //std::cout << Kain;
         Adam.out();
         Adam.GetChildren();
     }
