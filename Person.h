@@ -12,6 +12,7 @@ public:
     Person(const Person&);
     void Death(Person* = nullptr);
     void GetParents();
+    void GetChildren();
     Person& operator =(Person const& other);
     Person GiveBirth(std::string, std::string, Person*);
     friend std::ostream& operator <<(std::ostream&, const Person&);
