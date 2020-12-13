@@ -27,6 +27,7 @@ void Person::SetEva(std::string gender, std::string name) {
     gender_ = gender;
     name_ = name;
     status_ = "Alive";
+    clone_ = true;
 }
 Person CreateEva(Person &Eva){
     Eva.SetEva("female", "Eva");
@@ -41,6 +42,7 @@ void Person::SetAdam(std::string gender, std::string name) {
     gender_ = gender;
     name_ = name;
     status_ = "Alive";
+    clone_ = true;
 }
 Person CreateAdam(Person &Adam){
     Adam.SetAdam("male", "Adam");
@@ -98,15 +100,21 @@ Person::Person(std::string gender, std::string name, Person* mother, Person* fat
     status_ = "Alive";
     mother_ = mother;
     father_ = father;
-    clone_ = 1;
+    clone_ = true;
 }
 // endregion
 // region Operator
-Person Person::operator = (Person& other) {
+Person& Person::operator = (Person const& other) {
     if (other.clone_){
         throw std::exception("You can't make army of clones.");
     }
-    (*this) = other;
+    id_ = other.id_;
+    name_ = other.name_;
+    gender_ = other.gender_;
+    status_ = other.status_;
+    mother_ = other.mother_;
+    father_ = other.father_;
+    clone_ = true;
     return (*this);
 }
 // endregion
