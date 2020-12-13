@@ -4,8 +4,10 @@ int main() {
     try{
         Person Adam = Person::GetAdam();
         Person Eva = Person::GetEva();
-        Adam.out();
-        Eva.out();
+        Person Kain = Eva.GiveBirth("male", "Kain", &Adam);
+        Person Avel = Eva.GiveBirth("male", "Avel", &Adam);
+        Kain.out();
+        Avel.out();
 
     }
     catch (std::exception& exception) {
