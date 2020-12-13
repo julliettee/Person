@@ -13,6 +13,62 @@ void Person::out(){
 }
 // endregion
 
+
+// region FirstPeople
+bool EvaCreation = false;
+bool AdamCreation = false;
+bool EvaGetting = false;
+bool AdamGetting = false;
+void Person::SetEva(std::string gender, std::string name) {
+    if (EvaCreation){
+        throw std::exception("Person Eva already created.");
+    }
+    id_ = GlobalID++;
+    gender_ = gender;
+    name_ = name;
+    status_ = "Alive";
+}
+Person CreateEva(Person &Eva){
+    Eva.SetEva("female", "Eva");
+    EvaCreation = true;
+    return Eva;
+}
+void Person::SetAdam(std::string gender, std::string name) {
+    if (AdamCreation){
+        throw std::exception("Person Adam already created.");
+    }
+    id_ = GlobalID++;
+    gender_ = gender;
+    name_ = name;
+    status_ = "Alive";
+}
+Person CreateAdam(Person &Adam){
+    Adam.SetAdam("male", "Adam");
+    AdamCreation = true;
+    return Adam;
+}
+static Person CreateGod(Person &God){
+    return God;
+}
+Person God = CreateGod(God);
+static Person Adam = CreateAdam(God);
+static Person Eva = CreateEva(God);
+
+Person Person::GetEva() {
+    if (EvaGetting){
+        throw std::exception("Person Eva already created.");
+    }
+    EvaGetting = true;
+    return Eva;
+}
+Person Person::GetAdam() {
+    if (AdamGetting){
+        throw std::exception("Person Adam already created.");
+    }
+    AdamGetting = true;
+    return Adam;
+}
+// endregion
 // region Constructor
 Person::Person(std::string gender, std::string name, Person* mother, Person* father){
     if (Genders.find(gender) == Genders.end()){

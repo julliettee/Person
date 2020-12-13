@@ -6,14 +6,20 @@
 
 class Person{
 public:
+    void SetEva(std::string, std::string);
+    void SetAdam(std::string, std::string);
+    static Person GetEva();
+    static Person GetAdam();
     virtual ~Person();
+    void out();
+
 private:
-    long id_;
-    std::string name_;
-    std::string gender_;
-    std::string status_;
-    Person* mother_;
-    Person* father_;
+    long id_ = -1;
+    std::string name_ = "God";
+    std::string gender_ = "male";
+    std::string status_ = "Alive";
+    Person* mother_ = nullptr;
+    Person* father_ = nullptr;
     Person(std::string, std::string, Person* = nullptr, Person* = nullptr);
 };
 #endif //PERSON_PERSON_H
