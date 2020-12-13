@@ -12,8 +12,6 @@ void Person::out(){
     std::cout << "Status: " << status_ << std::endl;
 }
 // endregion
-
-
 // region FirstPeople
 bool EvaCreation = false;
 bool AdamCreation = false;
@@ -116,6 +114,11 @@ Person& Person::operator = (Person const& other) {
     father_ = other.father_;
     clone_ = true;
     return (*this);
+}
+// endregion
+// region GiveBirth
+Person Person::GiveBirth(std::string gender, std::string name, Person *father) {
+    return Person(gender, name, this, father, false);
 }
 // endregion
 // region destructor
