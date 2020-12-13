@@ -4,8 +4,11 @@ int main() {
     try{
         Person Eva = Person::GetEva();
         Person Adam = Person::GetAdam();
-        Person Kain = Eva.GiveBirth("male", "Kain", &Adam);
-        Person Avel = Eva.GiveBirth("male", "Avel", &Adam);
+        Person Kain = Eva.GiveBirth(Genders::male, "Kain", &Adam);
+        Person Avel = Eva.GiveBirth(Genders::male, "Avel", &Adam);
+        std::cout << Kain.GetName() << std::endl;
+        std::cout << Kain.GetGender() << std::endl;
+        std::cout << Kain.GetStatus() << std::endl;
         Kain.Death(&Avel);
         Kain.GetParents();
         Eva.GetChildren(&Adam);
