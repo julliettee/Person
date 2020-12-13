@@ -142,6 +142,27 @@ Person& Person::operator = (Person const& other) {
     clone_ = true;
     return (*this);
 }
+std::ostream& operator <<(std::ostream& out, const Person& other){
+    out << other.name_;
+    out << "(" << other.id_ <<", " << other.gender_ << ", " << other.status_ << ")" << std::endl;
+    out << "Parents:" << std::endl;
+    out << "Mother ";
+    if (other.mother_ == nullptr){
+        out << "Unknown, ";
+    }
+    else{
+        out << (other.mother_) -> name_ << ", ";
+    }
+    out  << "Father ";
+    if (other.father_ == nullptr){
+        out << "Unknown ";
+    }
+    else{
+        out << (other.father_) -> name_ << " ";
+    }
+    out << std::endl;
+    return out;
+}
 // endregion
 // region Actions
 Person Person::GiveBirth(std::string gender, std::string name, Person *father) {

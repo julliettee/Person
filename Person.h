@@ -14,6 +14,7 @@ public:
     void GetParents();
     Person& operator =(Person const& other);
     Person GiveBirth(std::string, std::string, Person*);
+    friend std::ostream& operator <<(std::ostream&, const Person&);
     static Person GetEva();
     static Person GetAdam();
     virtual ~Person();
