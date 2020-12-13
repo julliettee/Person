@@ -27,7 +27,6 @@ public:
     virtual ~Person();
     void out();
 private:
-    long id_ = -1;
     bool clone_ = true;
     std::string name_;
 //    std::string gender_;
@@ -40,7 +39,7 @@ private:
     static Person Eva;
     static Person CreateEva(Person &Eva);
     static Person CreateAdam(Person &Adam);
-    Person(Genders, std::string, Person* = nullptr, Person* = nullptr, bool clone = true);
+    Person(Genders, std::string&, Person* = nullptr, Person* = nullptr, bool clone = true);
 
 };
 #endif //PERSON_PERSON_H

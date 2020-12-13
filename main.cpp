@@ -13,6 +13,8 @@ int main() {
         Kain.GetParents();
         Eva.GetChildren(&Adam);
         std::cout << Kain;
+        Adam.out();
+        Adam.GetChildren();
     }
     catch (std::exception& exception) {
         std::cerr << exception.what() << std::endl;
