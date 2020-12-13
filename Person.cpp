@@ -2,7 +2,7 @@
 
 static long GlobalID = 0;
 std::set <std::string> Genders = {"male", "female"};
-
+std::map<Person*, Person*> AllDeath;
 
 // region help-functions
 void Person::out(){
@@ -10,6 +10,15 @@ void Person::out(){
     std::cout << "Gender: " << gender_ << std::endl;
     std::cout << "Name: " << name_ << std::endl;
     std::cout << "Status: " << status_ << std::endl;
+    if (status_ == "Dead"){
+        if (AllDeath[this] == nullptr){
+            std::cout << "Unknown reason of death" <<std::endl;
+        }
+        else{
+            Person killer = *AllDeath[this];
+            std::cout << "Killed by " << killer.name_ << std::endl;
+        }
+    }
 }
 // endregion
 // region FirstPeople
@@ -139,9 +148,28 @@ Person& Person::operator = (Person const& other) {
     return (*this);
 }
 // endregion
-// region GiveBirth
+// region Actions
 Person Person::GiveBirth(std::string gender, std::string name, Person *father) {
+    Person mam = *this;
+    Person dad = *father;
+    if (mam.status_ == "Dead" || dad.status_ == "Dead"){
+        throw std::exception("Dead person can't give birth.");
+    }
     return Person(gender, name, this, father, false);
+}
+void Person::Death(Person* killer) {
+    Person person = *this;
+    if (person.status_ == "Dead"){
+        throw std::exception("This person already dead.");
+    }
+    if (killer != nullptr){
+        Person murder = *killer;
+        if (murder.status_ == "Dead"){
+            throw std::exception("Killer already dead.");
+        }
+    }
+    AllDeath[this] = killer;
+    status_ = "Dead";
 }
 // endregion
 // region destructor

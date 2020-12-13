@@ -4,7 +4,11 @@ int main() {
     try{
         Person Eva = Person::GetEva();
         Person Adam = Person::GetAdam();
-        Eva = Eva;
+        Person Kain = Eva.GiveBirth("male", "Kain", &Adam);
+        Person Avel = Eva.GiveBirth("male", "Avel", &Adam);
+        Kain.Death(&Avel);
+        Kain.Death();
+        Kain.out();
     }
     catch (std::exception& exception) {
         std::cout << exception.what() << std::endl;
