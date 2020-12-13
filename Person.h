@@ -12,6 +12,7 @@ public:
     void SetEva(std::string, std::string);
     void SetAdam(std::string, std::string);
     void Death(Person* = nullptr);
+    void GetParents();
     Person& operator =(Person const& other);
     Person GiveBirth(std::string, std::string, Person*);
     static Person GetEva();

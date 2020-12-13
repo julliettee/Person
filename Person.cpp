@@ -171,6 +171,22 @@ void Person::Death(Person* killer) {
     AllDeath[this] = killer;
     status_ = "Dead";
 }
+void Person::GetParents() {
+    if (mother_ == nullptr){
+        std::cout << "Unknown mother" << std::endl;
+    }
+    else{
+        Person mother = *mother_;
+        std::cout << mother.name_ << " is mother" << std::endl;
+    }
+    if (father_ == nullptr){
+        std::cout << "Unknown father" << std::endl;
+    }
+    else{
+        Person father = *father_;
+        std::cout << father.name_ << " is father" << std::endl;
+    }
+}
 // endregion
 // region destructor
 Person::~Person(void) = default;

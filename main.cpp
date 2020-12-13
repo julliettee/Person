@@ -7,7 +7,7 @@ int main() {
         Person Kain = Eva.GiveBirth("male", "Kain", &Adam);
         Person Avel = Eva.GiveBirth("male", "Avel", &Adam);
         Kain.Death(&Avel);
-        Kain.Death();
+        Kain.GetParents();
         Kain.out();
     }
     catch (std::exception& exception) {
