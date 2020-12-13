@@ -1,20 +1,16 @@
 #include "Person.h"
 
-const std::string Male = "male";
-const std::string Female = "female";
-const std::string NameEva = "Eva";
-const std::string NameAdam = "Adam";
 int main() {
     try{
-        Person Adam = Person(Male, NameAdam);
-        Person Eva = Person(Female, NameEva);
-        Person Kain = Person(Male, "Kain");
+        Person Adam = Person::GetAdam();
+        Person Eva = Person::GetEva();
         Adam.out();
         Eva.out();
-        Kain.out();
+
     }
     catch (std::exception& exception) {
         std::cout << exception.what() << std::endl;
+        exit(-1);
     }
 
     return 0;

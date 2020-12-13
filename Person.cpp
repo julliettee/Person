@@ -47,12 +47,12 @@ Person CreateAdam(Person &Adam){
     AdamCreation = true;
     return Adam;
 }
-static Person CreateGod(Person &God){
-    return God;
+static Person CreateHolySpirit(Person &HolySpirit){
+    return HolySpirit;
 }
-Person God = CreateGod(God);
-static Person Adam = CreateAdam(God);
-static Person Eva = CreateEva(God);
+Person HolySpirit = CreateHolySpirit(HolySpirit);
+static Person Adam = CreateAdam(HolySpirit);
+static Person Eva = CreateEva(HolySpirit);
 
 Person Person::GetEva() {
     if (EvaGetting){
@@ -74,10 +74,13 @@ Person::Person(std::string gender, std::string name, Person* mother, Person* fat
     if (Genders.find(gender) == Genders.end()){
         throw std::exception("Wrong value of gender.");
     }
+    if (name.empty()){
+        throw std::exception("Name can't be empty.");
+    }
     if (mother != nullptr){
         Person person = *mother;
         if (person.gender_ == "male"){
-            throw std::exception("Man can't give birth.");
+            throw std::exception("The gender of mother should be 'female'.");
         }
     }
     if (father != nullptr){
