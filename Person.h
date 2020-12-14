@@ -28,6 +28,7 @@ public:
     void out();
 private:
     Person();
+    long id_;
     std::string name_;
     Genders gender_;
     Status status_;

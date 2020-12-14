@@ -2,12 +2,13 @@
 
 typedef std::pair<Person *, Person *> Couple;
 long AntiCloneProtection = 0;
+long GlobalID = 0;
 static std::map<Person *, Person *> AllDeath;
 static std::map<Couple, std::vector<Person *>> ChildrenOfCouple;
 
-
 // region help-functions
 void Person::out() {
+    std::cout << "Id: " << id_ << std::endl;
     std::cout << "Gender: " << (this->GetGender()) << std::endl;
     std::cout << "Name: " << name_ << std::endl;
     std::cout << "Status: " << (this->GetStatus()) << std::endl;
@@ -37,12 +38,14 @@ bool AdamGetting = false;
 bool HaveGod = false;
 Person Person::HolySpirit;
 Person Person::CreateEva(Person& Eva) {
+    Eva.id_ = GlobalID++;
     Eva.gender_ = Genders::female;
     Eva.name_ = "Eva";
     Eva.status_ = Status::alive;
     return Eva;
 }
 Person Person::CreateAdam(Person& Adam) {
+    Adam.id_ = GlobalID++;
     Adam.gender_ = Genders::male;
     Adam.name_ = "Adam";
     Adam.status_ = Status::alive;
@@ -70,6 +73,7 @@ Person::Person() {
     if (HaveGod) {
         throw std::exception("You can't create God.");
     }
+    id_ = GlobalID++;
     status_ = Status::alive;
     gender_ = Genders::female;
     HaveGod = true;
@@ -84,6 +88,7 @@ Person::Person(const Person& other) {
     } else {
         throw std::exception("Stop making clone army");
     }
+    id_ = other.id_;
     name_ = other.name_;
     gender_ = other.gender_;
     status_ = other.status_;
@@ -108,6 +113,7 @@ Person::Person(Genders gender, std::string& name, Person *mother, Person *father
             throw std::exception("The gender of father should be 'male'.");
         }
     }
+    id_ = GlobalID++;
     name_ = name;
     gender_ = gender;
     status_ = Status::alive;
@@ -125,10 +131,9 @@ Person::Person(Genders gender, std::string& name, Person *mother, Person *father
 Person& Person::operator = (Person const& other) {
     throw std::exception("You can't make assignment. No clone army is allowed");
 }
-
 std::ostream& operator<<(std::ostream& out, const Person& other) {
     out << other.name_;
-    out << "(" << other.GetGender() << ", " << other.GetStatus() << ")" << std::endl;
+    out << "(" << other.id_ << ", " <<  other.GetGender() << ", " << other.GetStatus() << ")" << std::endl;
     out << "Parents:" << std::endl;
     out << "Mother ";
     if (other.mother_ == nullptr) {
