@@ -1,10 +1,10 @@
 #include "Person.h"
 
-typedef std::pair<Person *, Person *> Couple;
+using Couple = std::pair<Person *, Person *>;
 long AntiCloneProtection = 0;
 long GlobalID = 0;
-static std::map<Person *, Person *> AllDeath;
-static std::map<Couple, std::vector<Person *>> ChildrenOfCouple;
+static std::map <Person *, Person *> AllDeath;
+static std::map <Couple, std::vector<Person *>> ChildrenOfCouple;
 
 // region help-functions
 void Person::out() {
@@ -16,27 +16,32 @@ void Person::out() {
         if (AllDeath[this] == nullptr) {
             std::cout << "Unknown reason of death" << std::endl;
         } else {
-            std::cout << "Killed by " << AllDeath[this] -> name_ << std::endl;
+            std::cout << "Killed by " << AllDeath[this]->name_ << std::endl;
         }
     }
 }
+
 // endregion
 // region Getters
 std::string Person::GetGender() const {
     return (gender_ == Genders::male ? "male" : "female");
 }
-std::string Person::GetName() const{
+
+std::string Person::GetName() const {
     return name_;
 }
-std::string Person::GetStatus() const{
+
+std::string Person::GetStatus() const {
     return (status_ == Status::alive ? "Alive" : "Dead");
 }
+
 // endregion
 // region FirstPeople
 bool EvaGetting = false;
 bool AdamGetting = false;
 bool HaveGod = false;
 Person Person::HolySpirit;
+
 Person Person::CreateEva(Person& Eva) {
     Eva.id_ = GlobalID++;
     Eva.gender_ = Genders::female;
@@ -44,6 +49,7 @@ Person Person::CreateEva(Person& Eva) {
     Eva.status_ = Status::alive;
     return Eva;
 }
+
 Person Person::CreateAdam(Person& Adam) {
     Adam.id_ = GlobalID++;
     Adam.gender_ = Genders::male;
@@ -51,6 +57,7 @@ Person Person::CreateAdam(Person& Adam) {
     Adam.status_ = Status::alive;
     return Adam;
 }
+
 Person Person::GetEva() {
     if (EvaGetting) {
         throw std::exception("Person Eva already created.");
@@ -59,6 +66,7 @@ Person Person::GetEva() {
     AntiCloneProtection++;
     return CreateEva(HolySpirit);
 }
+
 Person Person::GetAdam() {
     if (AdamGetting) {
         throw std::exception("Person Adam already created.");
@@ -67,6 +75,7 @@ Person Person::GetAdam() {
     AntiCloneProtection++;
     return CreateAdam(HolySpirit);
 }
+
 // endregion
 // region Constructor
 Person::Person() {
@@ -101,15 +110,14 @@ Person::Person(Genders gender, std::string& name, Person *mother, Person *father
         throw std::exception("Name can't be empty.");
     }
     if (mother != nullptr) {
-        if (mother -> gender_ == Genders::male) {
+        if (mother->gender_ == Genders::male) {
             throw std::exception("The gender of mother should be 'female'.");
         }
-    }
-    else {
+    } else {
         throw std::exception("Mother can't be empty.");
     }
     if (father != nullptr) {
-        if (father -> gender_ == Genders::female) {
+        if (father->gender_ == Genders::female) {
             throw std::exception("The gender of father should be 'male'.");
         }
     }
@@ -126,14 +134,16 @@ Person::Person(Genders gender, std::string& name, Person *mother, Person *father
         ChildrenOfCouple[std::make_pair(father, mother)].push_back(this);
     }
 }
+
 // endregion
 // region Operator
-Person& Person::operator = (Person const& other) {
+Person& Person::operator=(Person const& other) {
     throw std::exception("You can't make assignment. No clone army is allowed");
 }
+
 std::ostream& operator<<(std::ostream& out, const Person& other) {
     out << other.name_;
-    out << "(" << other.id_ << ", " <<  other.GetGender() << ", " << other.GetStatus() << ")" << std::endl;
+    out << "(" << other.id_ << ", " << other.GetGender() << ", " << other.GetStatus() << ")" << std::endl;
     out << "Parents:" << std::endl;
     out << "Mother ";
     if (other.mother_ == nullptr) {
@@ -150,10 +160,11 @@ std::ostream& operator<<(std::ostream& out, const Person& other) {
     out << std::endl;
     return out;
 }
+
 // endregion
 // region Actions
 Person Person::GiveBirth(Genders gender, std::string name, Person *father) {
-    if (status_ == Status::dead || (father != nullptr && father -> status_ == Status::dead)) {
+    if (status_ == Status::dead || (father != nullptr && father->status_ == Status::dead)) {
         throw std::exception("Dead person can't give birth.");
     }
     return Person(gender, name, this, father);
@@ -164,23 +175,24 @@ void Person::Death(Person *killer) {
         throw std::exception("This person already dead.");
     }
     if (killer != nullptr) {
-        if (killer -> status_ == Status::dead) {
+        if (killer->status_ == Status::dead) {
             throw std::exception("Killer already dead.");
         }
     }
     AllDeath[this] = killer;
     status_ = Status::dead;
 }
+
 void Person::GetParents() {
     if (mother_ == nullptr) {
         std::cout << "Unknown mother" << std::endl;
     } else {
-        std::cout << mother_ -> name_ << " is mother" << std::endl;
+        std::cout << mother_->name_ << " is mother" << std::endl;
     }
     if (father_ == nullptr) {
         std::cout << "Unknown father" << std::endl;
     } else {
-        std::cout << father_ -> name_ << " is father" << std::endl;
+        std::cout << father_->name_ << " is father" << std::endl;
     }
 }
 
@@ -202,10 +214,11 @@ void Person::GetChildren(Person *parent) {
     } else {
         std::cout << "Children of " << name_ << " and " << parent->name_ << ":" << std::endl;
         for (auto child: ChildrenOfCouple[couple]) {
-            std::cout << child -> name_ << "(" << child -> GetGender() << ", " << child -> GetStatus() << ")" << std::endl;
+            std::cout << child->name_ << "(" << child->GetGender() << ", " << child->GetStatus() << ")" << std::endl;
         }
     }
 }
+
 // endregion
 // region destructor
 Person::~Person(void) = default;

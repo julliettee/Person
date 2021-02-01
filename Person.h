@@ -6,11 +6,10 @@
 #include <set>
 #include <map>
 
-enum class Genders {male,female};
-enum class Status {alive, dead};
-
 class Person{
 public:
+    enum class Genders {male,female};
+    enum class Status {alive, dead};
     Person(const Person&);
     std::string GetGender() const;
     std::string GetStatus() const;

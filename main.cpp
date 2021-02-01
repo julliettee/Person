@@ -2,28 +2,18 @@
 
 int main() {
     try {
-        //Person::GetEva();
         Person Eva = Person::GetEva();
         Person Adam = Person::GetAdam();
-        //Adam = Eva;
-        Person Kain = Eva.GiveBirth(Genders::male, "Kain", &Adam);
-        Person Avel = Eva.GiveBirth(Genders::male, "Avel", &Adam);
+        Person Kain = Eva.GiveBirth(Person::Genders::male, "Kain", &Adam);
+        Person Avel = Eva.GiveBirth(Person::Genders::male, "Avel", &Adam);
         Kain.Death(&Avel);
-        std::cout << Kain;
-        std::cout << Avel;
-        std::cout << Eva;
-        std::cout << Adam;
+        std::cout <<"All about Kain: " << std::endl << Kain;
         std::cout << std::endl;
+        std::cout <<"All about Eva: " << std::endl << Eva;
         std::cout << std::endl;
-        std::cout << std::endl;
-        std::cout << std::endl;
-        std::cout << std::endl;
-        std::cout << Kain.GetName() << std::endl;
-        std::cout << Kain.GetGender() << std::endl;
-        std::cout << Kain.GetStatus() << std::endl;
-        Kain.GetParents();
         Eva.GetChildren(&Adam);
-        //std::cout << Kain;
+        std::cout << std::endl;
+        std::cout << "All about Adam:" << std::endl;
         Adam.out();
         Adam.GetChildren();
     }
